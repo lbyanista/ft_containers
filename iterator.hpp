@@ -14,6 +14,8 @@ namespace ft
         typedef typename T::iterator_gategory iteraror_gategory;
     };
 
+
+    //pointer 
     template <typename T>
     struct iterator_traits<T*>
     {
@@ -24,6 +26,8 @@ namespace ft
         typedef typename T::iterator_gategory iteraror_gategory;
     };
 
+
+    //const pointer
     template <typename T>
     struct iterator_traits<const T*>
     {
@@ -33,6 +37,17 @@ namespace ft
         typedef typename T::reference reference;
         typedef typename T::iterator_gategory iteraror_gategory;
     }; 
+
+    //enable_if
+    template<bool Cond, class T = void>
+    struct enable_if {};
+
+    template<class T>
+    struct enable_if<true, T> { 
+        typedef T type;
+    };
+
+    
 }
 
 
