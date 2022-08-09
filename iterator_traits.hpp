@@ -1,6 +1,8 @@
 #pragma once
 
 #include <iostream>
+#include <iterator>
+#include <cstddef>
 
 namespace ft
 {
@@ -11,19 +13,18 @@ namespace ft
         typedef typename T::value_type value_type;
         typedef typename T::pointer pointer;
         typedef typename T::reference reference;
-        typedef typename T::iterator_gategory iteraror_gategory;
+        typedef typename T::iterator_gategory iterator_category;
     };
-
 
     //pointer 
     template <typename T>
     struct iterator_traits<T*>
     {
-        typedef typename T::difference_type difference_type;
-        typedef typename T::value_type value_type;
-        typedef typename T::pointer pointer;
-        typedef typename T::reference reference;
-        typedef typename T::iterator_gategory iteraror_gategory;
+        typedef ptrdiff_t difference_type;
+        typedef T value_type;
+        typedef T* pointer;
+        typedef T& reference reference;
+        typedef std::random_access_iterator_tag iterator_category;//need more info
     };
 
 
@@ -31,69 +32,10 @@ namespace ft
     template <typename T>
     struct iterator_traits<const T*>
     {
-        typedef typename T::difference_type difference_type;
-        typedef typename T::value_type value_type;
-        typedef typename T::pointer pointer;
-        typedef typename T::reference reference;
-        typedef typename T::iterator_gategory iteraror_gategory;
+        typedef const ptrdiff_t difference_type;
+        typedef const T value_type;
+        typedef const T* pointer;
+        typedef const T& reference;
+        typedef const std::random_access_iterator_tag iterator_category;
     }; 
-
-    //enable_if
-    template<bool Cond, class T = void>
-    struct enable_if {};
-
-    template<class T>
-    struct enable_if<true, T> { 
-        typedef T type;
-    };
-
-//is_integral
-
-    template <class T>
-    struct is_integral {static const bool value = false}; //if T not intergal || not found in Fundamental integral types
-
-    template <>
-    struct is_integral<bool> {static const bool value = true};
-
-    template <>
-    struct is_integral<char> {static const bool value = true};
-
-    template <>
-    struct is_integral<char16_t> {static const bool value = true};
-
-    template <>
-    struct is_integral<char32_t> {static const bool value = true};
-
-    template <>
-    struct is_integral<wchar_t> {static const bool value = true};
-
-    template <>
-    struct is_integral<signed char> {static const bool value = true};
-
-    template <>
-    struct is_integral<short int> {static const bool value = true};
-
-    template <>
-    struct is_integral<int> {static const bool value = true};
-
-    template <>
-    struct is_integral<long int> {static const bool value = true};
-
-    template <>
-    struct is_integral<long long int> {static const bool value = true};
-
-    template <>
-    struct is_integral<unsigned char> {static const bool value = true};
-
-    template <>
-    struct is_integral<unsigned short int> {static const bool value = true};
-
-    template <>
-    struct is_integral<unsigned int> {static const bool value = true};
-
-    template <>
-    struct is_integral<unsigned long int> {static const bool value = true};
-
-    template <>
-    struct is_integral<unsigned long long int> {static const bool value = true};
-}
+};

@@ -8,11 +8,10 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This program built for i386-apple-darwin11.3.0
  
 
-# Make data base, printed on Mon Aug  8 11:39:48 2022
+# Make data base, printed on Tue Aug  9 18:08:24 2022
 
 # Variables
 
- 
 # automatic
 <D = $(patsubst %/,%,$(dir $<))
 # automatic
@@ -40,7 +39,7 @@ CPP = c++
 # environment
 VSCODE_CWD = /
 # environment
-Apple_PubSub_Socket_Render = /private/tmp/com.apple.launchd.uutrxaq1m2/Render
+Apple_PubSub_Socket_Render = /private/tmp/com.apple.launchd.NzpbbtOgE8/Render
 # environment
 PATH = /Users/mlabrayj/.brew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki:/Library/Frameworks/Mono.framework/Versions/Current/Commands
 # environment
@@ -50,7 +49,7 @@ ELECTRON_RUN_AS_NODE = 1
 # default
 .FEATURES := target-specific order-only second-expansion else-if archives jobserver check-symlink
 # environment
-SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.bjIEpNYFwm/Listeners
+SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.rTxdJQB8Yi/Listeners
 # automatic
 %F = $(notdir $%)
 # environment
@@ -114,7 +113,7 @@ MFLAGS = -Rrqp
 # automatic
 *D = $(patsubst %/,%,$(dir $*))
 # environment
-XPC_SERVICE_NAME = com.microsoft.VSCode.1648
+XPC_SERVICE_NAME = com.microsoft.VSCode.2012
 # automatic
 +D = $(patsubst %/,%,$(dir $+))
 # automatic
@@ -142,7 +141,7 @@ MAKELEVEL := 0
 # environment
 LANG = C
 # environment
-VSCODE_PID = 41104
+VSCODE_PID = 34066
 # variable set hash-table stats:
 # Load=65/1024=6%, Rehash=0, Collisions=1/91=1%
 
@@ -152,9 +151,9 @@ VSCODE_PID = 41104
 
 # Directories
 
-# . (device 16777227, inode 3895403): 7 files, no impossibilities.
+# . (device 16777227, inode 3895403): 11 files, no impossibilities.
 
-# 7 files, no impossibilities in 1 directories.
+# 11 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -203,10 +202,10 @@ re: fclean all
 #  File has not been updated.
 
 clean:
+ 
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
- 
 #  commands to execute (from `Makefile', line 12):
 	@rm -f $(NAME)
 	
@@ -224,6 +223,6 @@ clean:
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
 # strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
 
-# Finished Make data base on Mon Aug  8 11:39:48 2022
+# Finished Make data base on Tue Aug  9 18:08:24 2022
 
  
