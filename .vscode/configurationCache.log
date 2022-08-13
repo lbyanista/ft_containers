@@ -1,1 +1,1 @@
-{"buildTargets":["all","clean","fclean","re"],"launchTargets":[],"customConfigurationProvider":{"workspaceBrowse":{"browsePath":[],"compilerArgs":[]},"fileIndex":[]}}
+{"buildTargets":["all","clean","containers","fclean","re"],"launchTargets":["/Users/mlabrayj/42_Cursus/ft_containers>.cpp()","/Users/mlabrayj/42_Cursus/ft_containers>containers()"],"customConfigurationProvider":{"workspaceBrowse":{"browsePath":[],"compilerArgs":[]},"fileIndex":[]}}

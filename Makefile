@@ -1,4 +1,4 @@
-NAME	=	
+NAME	=	containers
 SRC		=	.cpp
 CPP		=	c++
 FLAGS	=	-Wall -Werror -Wextra -std=c++98
