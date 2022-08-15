@@ -28,24 +28,30 @@ namespace ft {
 			size_type			_capacity;
 
 		public:
-			explicit vector (const allocator_type& alloc = allocator_type()) : _alloc(alloc) *_container(NULL) _size(0) _capacity(0) {};
+			explicit vector (const allocator_type& alloc = allocator_type()) : _alloc(alloc), _container(NULL), _size(0), _capacity(0) {};
 
-			explicit vector (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()) : _alloc(alloc) *_container(NULL) _size(n) _capacity(n) {
+			explicit vector (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()) : _alloc(alloc), _container(NULL), _size(n), _capacity(n) {
 
 			};
 			template <class InputIterator>
          	vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type()) {};
 
 			vector (const vector &x) {
-				
+				*this = x;
 			};
 
-			vector& operator= (const vector& x) {};
+			vector& operator= (const vector& x) {
+				this._alloc = x._alloc;
+				this._container = x._container;
+				this._size = x.size;
+				this._capacity = x._capacity;
+				return (*this);
+			};
 
 			~vector(){};
 
 			iterator begin(){
-				return _arr;
+				return _arr[0];
 			}
 
 			const_iterator begin() const {
@@ -53,10 +59,10 @@ namespace ft {
 			}
 
 			iterator end(){
-				return 
+				return _arr[size];
 			};
 			const_iterator end() const{
-
+				return _arr[size];
 			};
     };
 };
