@@ -2,8 +2,8 @@
 #include <iostream>
 int main(){
 
-    int a = 1;
-    ft::vector<int> v(a, a);
+    // int a = 1;
+    ft::vector<int> v(5, 3);
     // ft::vector<int> v(10, a);
     // ft::vector<int> v(10, int(a));
     // delete a;

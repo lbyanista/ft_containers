@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <iostream>
 
 #include <memory>
 
@@ -28,7 +29,9 @@ namespace ft {
 			size_type			_capacity;
 
 		public:
-			explicit vector (const allocator_type& alloc = allocator_type()) : _alloc(alloc), _container(NULL), _size(0), _capacity(0) {};
+			explicit vector (const allocator_type& alloc = allocator_type()) : _alloc(alloc), _container(NULL), _size(0), _capacity(0) {
+
+			};
 
 			explicit vector (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()) : _alloc(alloc), _container(NULL), _size(n), _capacity(n) {
 				this->_container = this->_alloc.allocate(this->_size);
@@ -41,12 +44,12 @@ namespace ft {
 
 					this->_alloc.construct(this->_container + i, val);
 				}
-				
 			};
-			// template <class InputIterator>
-         	// vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type()) {
-
-			// };
+			template <class InputIterator>
+         	vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type()) {
+				this->_size = last - first;
+				this->_capacity = this->_size;
+			};
 
 			vector (const vector &x) {
 				*this = x;
@@ -60,7 +63,9 @@ namespace ft {
 				return (*this);
 			};
 
-			~vector(){};
+			~vector(){
+				delete this->_container;
+			};
 
 			// iterator begin(){
 			// 	return _arr[0];
