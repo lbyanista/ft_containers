@@ -3,6 +3,9 @@
 #include <vector>
 #include <iostream>
 
+#include "../enable_if.hpp"
+#include "../is_integral.hpp"
+
 #include <memory>
 
 namespace ft {
@@ -46,9 +49,15 @@ namespace ft {
 				}
 			};
 			template <class InputIterator>
-         	vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type()) {
+         	vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type(), 
+					typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type = InputIterator()) {
 				this->_size = last - first;
 				this->_capacity = this->_size;
+				this->_container = this->_alloc.allocate(this->_size);
+				for (size_type i = 0; i < this->_size; i++)
+				{
+					this->_alloc.construct(this->_container + i, *(first + i));
+				}
 			};
 
 			vector (const vector &x) {
