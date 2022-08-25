@@ -53,11 +53,9 @@ namespace ft {
 					typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type = InputIterator()) {
 				this->_size = last - first;
 				this->_capacity = this->_size;
-				this->_container = this->_alloc.allocate(this->_size);
+				this->_container = this->_alloc.allocate(this->_capacity);
 				for (size_type i = 0; i < this->_size; i++)
-				{
 					this->_alloc.construct(this->_container + i, *(first + i));
-				}
 			};
 
 			vector (const vector &x) {
@@ -65,30 +63,90 @@ namespace ft {
 			};
 
 			vector& operator= (const vector& x) {
+				if(this->_size){
+					this->_alloc.deallocate(this->_container, this->_capacity);
+				}
 				this->_alloc = x._alloc;
-				this->_container = x._container;
-				this->_size = x.size;
+				this->_size = x._size;
 				this->_capacity = x._capacity;
+				this->_container = this->_alloc.allocate(this->_capacity);
+				for (size_type i = 0; i < this->_size; i++)
+					this->_alloc.construct(this->_container + i, *(x._container + i));
 				return (*this);
 			};
 
 			~vector(){
-				delete this->_container;
+				if(this->_size){
+					this->_alloc.deallocate(this->_container, this->_capacity);
+				}
 			};
 
-			// iterator begin(){
-			// 	return _arr[0];
-			// }
+			iterator begin(){
+				return iterator(this->_container);
+			}
+			const_iterator begin() const{
+				return const_iterator(this->_container);
+			}
 
-			// const_iterator begin() const {
-			// 	return _arr;
-			// }
+			iterator end(){
+				return iterator(this->_container + this->_size);
+			}
+			const_iterator end() const{
+				return const_iterator(this->_container + this->_size);
+			}
 
-			// iterator end(){
-			// 	return _arr[size];
-			// };
-			// const_iterator end() const{
-			// 	return _arr[size];
-			// };
+			reverse_iterator rbegin(){
+				return reverse_iterator(this->_container + (this->_size));
+			}
+			const_reverse_iterator rbegin() const{
+				return const_reverse_iterator(this->_container + (this->_size));
+			}
+
+			reverse_iterator rend(){
+				return reverse_iterator(this->_container - 1);
+			}
+			const_reverse_iterator rend() const{
+				return const_reverse_iterator(this->_container - 1);
+			}
+
+			size_type size() const{
+				return this->_size;
+			}
+
+			size_type max_size() const{
+				return this->_alloc.max_size();
+			}
+
+			void resize (size_type n, value_type val = value_type()){
+
+			}
+
+			size_type capacity() const{
+				return this->_capacity;
+			}
+
+			bool empty() const{
+				if(this->_size){
+					return false;
+				}
+				return true;
+			}
+
+			void reserve (size_type n){
+				if(n > max_size()){
+					throw	exception;
+				}
+				if(n > this->_capacity){
+					pointer tmp;
+					tmp = this->_alloc.allocate(n);
+
+					for (size_type i = 0; i < this->_size; i++)
+						this->_alloc.construct(tmp + i, *(this->_container + i));
+
+					this->_alloc.deallocate(this->_container, this->_capacity);
+					this->_container = tmp;
+					this->_capacity = n;
+				}
+			}
     };
 };
