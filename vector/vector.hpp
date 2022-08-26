@@ -3,8 +3,8 @@
 #include <vector>
 #include <iostream>
 
-#include "../enable_if.hpp"
-#include "../is_integral.hpp"
+#include "../utility/enable_if.hpp"
+#include "../utility/is_integral.hpp"
 
 #include <memory>
 
@@ -23,7 +23,7 @@ namespace ft {
 			typedef		typename	std::vector<T>::reverse_iterator	reverse_iterator;
 			typedef		typename	std::vector<T>::const_reverse_iterator	const_reverse_iterator;
 			typedef 	typename	allocator_type::difference_type 		difference_type;
-			typedef 				size_t									size_type;
+			typedef 				std::size_t									size_type;
 
 		private:
 			allocator_type		_alloc;
