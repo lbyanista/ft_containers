@@ -11,7 +11,7 @@ namespace ft {
         typedef typename Container::value_type value_type;
         typedef typename container_type::size_type size_type;
 
-        public:
+        protected:
             container_type c;
 
         public:

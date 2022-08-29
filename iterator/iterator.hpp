@@ -9,7 +9,7 @@ namespace ft
     template <typename T>
     struct vec_iterator
     {
-        typedef T iterator_type;
+        typedef T* iterator_type;
         typedef typename iterator_traits<T*>::value_type value_type;
         typedef typename iterator_traits<T*>::iterator_category iterator_category;
         typedef typename iterator_traits<T*>::difference_type difference_type;
@@ -17,7 +17,7 @@ namespace ft
         typedef typename iterator_traits<T*>::reference reference;
 
         private:
-            pointer current;
+            iterator_type current;
 
         public:
             vec_iterator() {}
