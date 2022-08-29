@@ -55,6 +55,7 @@ namespace ft {
 			template <class InputIterator>
          	vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type(), 
 					typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type = InputIterator()) {
+				this->_alloc = alloc;
 				this->_size = last - first;
 				this->_capacity = this->_size;
 				this->_container = this->_alloc.allocate(this->_capacity);
