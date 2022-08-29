@@ -4,14 +4,14 @@
 #include "../vector/vector.hpp"
 
 namespace ft {
-    template <class T, class Container = deque<T> >
+    template <class T, class Container = std::deque<T> >
     class stack
     {
-        typedef typename container_type::value_type value_type;
         typedef Container container_type;
+        typedef typename Container::value_type value_type;
         typedef typename container_type::size_type size_type;
 
-        private:
+        public:
             container_type c;
 
         public:
