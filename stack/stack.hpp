@@ -1,20 +1,21 @@
 #pragma once
 #include <iostream>
-#include <deque>
 #include "../vector/vector.hpp"
 
 namespace ft {
-    template <class T, class Container = std::deque<T> >
+    template <class T, class Container = vector<T> >
     class stack
     {
-        typedef Container container_type;
-        typedef typename Container::value_type value_type;
-        typedef typename container_type::size_type size_type;
-
         protected:
             container_type c;
 
         public:
+
+        typedef Container 	container_type;
+        typedef T			value_type;
+        typedef size_t		size_type;
+
+
         explicit stack (const container_type& ctnr = container_type()){
             c = ctnr;
         }
@@ -42,6 +43,22 @@ namespace ft {
 		void pop(){
 			c.pop_back();
 		}
+
+
+		template <class Tf, class Containerf>
+		friend	bool operator== (const stack<Tf, Containerf>& lhs, const stack<Tf, Containerf>& rhs);
+		template <class Tf, class Containerf>
+  		friend	bool operator!= (const stack<Tf, Containerf>& lhs, const stack<Tf, Containerf>& rhs);
+		template <class Tf, class Containerf>
+		friend	bool operator<  (const stack<Tf, Containerf>& lhs, const stack<Tf, Containerf>& rhs);
+		template <class Tf, class Containerf>
+		friend	bool operator<= (const stack<Tf, Containerf>& lhs, const stack<Tf, Containerf>& rhs);
+		template <class Tf, class Containerf>
+		friend	bool operator>  (const stack<Tf, Containerf>& lhs, const stack<Tf, Containerf>& rhs);
+		template <class Tf, class Containerf>
+		friend	bool operator>= (const stack<Tf, Containerf>& lhs, const stack<Tf, Containerf>& rhs);
+
+
     }; //end of class stack
 
 
