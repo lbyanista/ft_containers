@@ -11,8 +11,8 @@ namespace ft
     {
         private:
             pointer _ptr;
-            random_access_iterator(const reference curr){
-                _ptr = curr;
+            random_access_iterator(const reference current){
+                _ptr = current;
             }   
 
         public:
