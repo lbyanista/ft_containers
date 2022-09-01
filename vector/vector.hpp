@@ -2,11 +2,11 @@
 
 #include <vector>
 #include <iostream>
-#include "../iterator/iterator.hpp"
-#include "../iterator/reverse_iterator.hpp"
+#include "iterator.hpp"
+#include "reverse_iterator.hpp"
 
-#include "../utility/enable_if.hpp"
-#include "../utility/is_integral.hpp"
+#include "enable_if.hpp"
+#include "is_integral.hpp"
 
 #include <algorithm>
 
@@ -68,7 +68,9 @@ namespace ft {
 			};
 
 			vector& operator= (const vector& x) {
-				if(this->_size){
+				if(this->_capacity){
+					for (size_type i = 0; i < this->_size; i++)
+						this->_alloc.destroy(this->_container + i);
 					this->_alloc.deallocate(this->_container, this->_capacity);
 				}
 				this->_alloc = x._alloc;
@@ -101,17 +103,17 @@ namespace ft {
 			}
 
 			reverse_iterator rbegin(){
-				return reverse_iterator(this->_container + (this->_size));
+				return reverse_iterator(end());
 			}
 			const_reverse_iterator rbegin() const{
-				return const_reverse_iterator(this->_container + (this->_size));
+				return const_reverse_iterator(end());
 			}
 
 			reverse_iterator rend(){
-				return reverse_iterator(this->_container - 1);
+				return reverse_iterator(begin());
 			}
 			const_reverse_iterator rend() const{
-				return const_reverse_iterator(this->_container - 1);
+				return const_reverse_iterator(begin());
 			}
 
 			size_type size() const{
@@ -260,22 +262,26 @@ namespace ft {
 			}
 
 			void insert(iterator position, size_type n, const value_type& val){
-				if(this->_size + n > this->_capacity)
-					this->reserve(this->_capacity * 2);
+				if(this->_size + n > this->_capacity){
+					if (this->_capacity * 2 >= this->_size + n)
+						this->reserve(this->_capacity * 2);
+					else
+						this->reserve(this->_size + n);
+				}
 				pointer tmp;
 				tmp = this->_alloc.allocate(this->_capacity);
-				for (size_type i = 0; i < this->_size; i++)
+				size_type t = 0;
+				for(iterator it = this->begin(); it != position; it++){
+					t++;
+				}
+				for (size_type i = 0; i < t; i++)
 					this->_alloc.construct(tmp + i, *(this->_container + i));
+				for (size_type j = this->_size; j > t; j--)
+					this->_alloc.construct(tmp + j + (n - 1), this->_container[j - 1]);
+				for (size_type j = 0; j < n; j++)
+					this->_alloc.construct(tmp + t + j, val);
 				this->_alloc.deallocate(this->_container, this->_capacity);
 				this->_container = tmp;
-				size_type i = 0;
-				for(iterator it = this->begin(); it != position; it++){
-					i++;
-				}
-				for (size_type j = this->_size; j > i; j--)
-					this->_container[j + n - 1] = this->_container[j - 1];
-				for (size_type j = 0; j < n; j++)
-					this->_alloc.construct(this->_container + i + j, val);
 				this->_size += n;
 			}
 

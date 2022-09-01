@@ -6,6 +6,7 @@ namespace ft
     template <typename T>
     class reverse_iterator
     {
+        public:
         typedef T iterator_type;
         typedef typename iterator_traits<T>::iterator_category iterator_category;
         typedef typename iterator_traits<T>::value_type value_type;
@@ -28,10 +29,10 @@ namespace ft
                 return current;
             }
 
-            // reference operator*() const{
-            //     iterator_type tmp = current;
-            //     return *(--tmp);
-            // }
+            reference operator*() const{
+                iterator_type tmp = current;
+                return *(--tmp);
+            }
 
             reverse_iterator operator+ (difference_type n) const{
                 return reverse_iterator(current - n);

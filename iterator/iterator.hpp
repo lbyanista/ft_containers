@@ -3,67 +3,69 @@
 
 #include "iterator_traits.hpp"
 
-
 namespace ft
 {
     template <typename T>
-    class random_access_iterator
+    class vec_iterator
     {
+        public:
+        typedef typename iterator_traits<T*>::value_type value_type;
+        typedef typename iterator_traits<T*>::difference_type difference_type;
+        typedef typename iterator_traits<T*>::pointer pointer;
+        typedef typename iterator_traits<T*>::reference reference;
+        typedef typename iterator_traits<T*>::iterator_category iterator_category;
+
         private:
             pointer _ptr;
-            random_access_iterator(const reference current){
-                _ptr = current;
-            }   
 
         public:
-        typedef typename iterator_traits<T>::value_type value_type;
-        typedef typename iterator_traits<T>::difference_type difference_type;
-        typedef typename iterator_traits<T>::pointer pointer;
-        typedef typename iterator_traits<T>::reference reference;
-        typedef typename iterator_traits<T>::iterator_category iterator_category;
+        vec_iterator(const reference current){
+            _ptr = current;
+        }   
 
         pointer base(void) const
         {
             return _ptr;
         }
 
-        random_access_iterator(void) {
-            _ptr = T();
+        vec_iterator(void) {
+            // _ptr = int();
         }
 
-        random_access_iterator(pointer ptr) {
+        vec_iterator(pointer ptr) {
             _ptr = ptr;
         }
 
-        template<typename T>
-        random_access_iterator(const random_access_iterator<T>& other) {
-            *this = other;
+        template<typename U>
+        vec_iterator(const vec_iterator<U> &other) {
+            // *this = other;
+            this->_ptr = other.base();
         }
 
-        template<typename T>
-        random_access_iterator<T>& operator=(const random_access_iterator<T>& other) {
+        template<typename U, typename V>
+        vec_iterator<U>& operator=(const vec_iterator<V>& other) {
             _ptr = other.base();
             return *this;
         }
 
-        random_access_iterator<T>& operator++(void) {
+        vec_iterator<T>& operator++(void) {
             ++_ptr;
             return *this;
         }
 
-        random_access_iterator<T> operator++(int) {
-            random_access_iterator<T> tmp = *this;
+        vec_iterator<T> operator++(int) {
+            vec_iterator<T> tmp = *this;
             ++_ptr;
             return tmp;
         }
 
-        random_access_iterator<T>& operator--(void) {
+        vec_iterator<T>& operator--(void) {
             --_ptr;
             return *this;
         }
 
-        random_access_iterator<T> operator--(int) {
-            random_access_iterator<T> tmp = *this;
+        vec_iterator<T> operator--(int) {
+            vec_iterator<T> tmp = *this;
             --_ptr;
             return tmp;
         }
@@ -80,20 +82,20 @@ namespace ft
             return _ptr[n];
         }
 
-        random_access_iterator<T> operator+(difference_type n) const {
-            return random_access_iterator<T>(_ptr + n);
+        vec_iterator<T> operator+(difference_type n) const {
+            return vec_iterator<T>(_ptr + n);
         }
 
-        random_access_iterator<T> operator-(difference_type n) const {
-            return random_access_iterator<T>(_ptr - n);
+        vec_iterator<T> operator-(difference_type n) const {
+            return vec_iterator<T>(_ptr - n);
         }
 
-        random_access_iterator<T>& operator+=(difference_type n) {
+        vec_iterator<T>& operator+=(difference_type n) {
             _ptr += n;
             return *this;
         }
 
-        random_access_iterator<T>& operator-=(difference_type n) {
+        vec_iterator<T>& operator-=(difference_type n) {
             _ptr -= n;
             return *this;
         }
@@ -176,42 +178,42 @@ namespace ft
 
 
     template <typename TL, typename TR>
-    bool operator==(const random_access_iterator<TL>& lhs, const random_access_iterator<TR>& rhs) {
+    bool operator==(const vec_iterator<TL>& lhs, const vec_iterator<TR>& rhs) {
         return lhs.base() == rhs.base();
     }
 
     template <typename TL, typename TR>
-    bool operator!=(const random_access_iterator<TL>& lhs, const random_access_iterator<TR>& rhs) {
+    bool operator!=(const vec_iterator<TL>& lhs, const vec_iterator<TR>& rhs) {
         return !(lhs == rhs);
     }
 
     template <typename TL, typename TR>
-    bool operator<(const random_access_iterator<TL>& lhs, const random_access_iterator<TR>& rhs) {
+    bool operator<(const vec_iterator<TL>& lhs, const vec_iterator<TR>& rhs) {
         return lhs.base() < rhs.base();
     }
 
     template <typename TL, typename TR>
-    bool operator>(const random_access_iterator<TL>& lhs, const random_access_iterator<TR>& rhs) {
+    bool operator>(const vec_iterator<TL>& lhs, const vec_iterator<TR>& rhs) {
         return lhs.base() > rhs.base();
     }
 
     template <typename TL, typename TR>
-    bool operator<=(const random_access_iterator<TL>& lhs, const random_access_iterator<TR>& rhs) {
+    bool operator<=(const vec_iterator<TL>& lhs, const vec_iterator<TR>& rhs) {
         return lhs.base() <= rhs.base();
     }
 
     template <typename TL, typename TR>
-    bool operator>=(const random_access_iterator<TL>& lhs, const random_access_iterator<TR>& rhs) {
+    bool operator>=(const vec_iterator<TL>& lhs, const vec_iterator<TR>& rhs) {
         return lhs.base() >= rhs.base();
     }
 
     template <typename T>
-    random_access_iterator<T> operator+(const typename random_access_iterator<T>::different_type &n, const random_access_iterator<T> &it) {
+    vec_iterator<T> operator+(const typename vec_iterator<T>::difference_type &n, const vec_iterator<T> &it) {
         return n + it.base();
     }
 
     template <typename TL, typename TR>
-    typename random_access_iterator<TL>::difference_type operator-(const random_access_iterator<TL>& lhs, const random_access_iterator<TR>& rhs) {
+    typename vec_iterator<TL>::difference_type operator-(const vec_iterator<TL>& lhs, const vec_iterator<TR>& rhs) {
         return lhs.base() - rhs.base();
     }
 
