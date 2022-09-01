@@ -83,7 +83,7 @@ namespace ft {
 			};
 
 			~vector(){
-				if(this->_size){
+				if(this->_capacity){
 					for (size_type i = 0; i < this->_size; i++)
 						this->_alloc.destroy(this->_container + i);
 					this->_alloc.deallocate(this->_container, this->_capacity);
@@ -237,10 +237,10 @@ namespace ft {
 			}
 
 			void push_back (const value_type& val){
-				if(this->_size == this->_capacity)
-					this->reserve(this->_capacity * 2);
 				if(this->_capacity == 0)
 					this->reserve(1);
+				else if(this->_size == this->_capacity)
+					this->reserve(this->_capacity * 2);
 				this->_alloc.construct(this->_container + this->_size, val);
 				this->_size++;
 			}
