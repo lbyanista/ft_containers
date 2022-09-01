@@ -84,6 +84,8 @@ namespace ft {
 
 			~vector(){
 				if(this->_size){
+					for (size_type i = 0; i < this->_size; i++)
+						this->_alloc.destroy(this->_container + i);
 					this->_alloc.deallocate(this->_container, this->_capacity);
 				}
 			};
@@ -166,6 +168,8 @@ namespace ft {
 
 					for (size_type i = 0; i < this->_size; i++)
 						this->_alloc.construct(tmp + i, *(this->_container + i));
+					for (size_type i = 0; i < this->_size; i++)
+						this->_alloc.destroy(this->_container + i);
 					this->_alloc.deallocate(this->_container, this->_capacity);
 					this->_container = tmp;
 					this->_capacity = n;
@@ -211,6 +215,8 @@ namespace ft {
 			template <class InputIterator>
 			void assign (InputIterator first, InputIterator last,
 						typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = 0){
+				for (size_type i = 0; i < this->_size; i++)
+						this->_alloc.destroy(this->_container + i);
 				if(this->_size)
 					this->_alloc.deallocate(this->_container, this->_capacity);
 				this->_size = 0;
@@ -220,6 +226,8 @@ namespace ft {
 			}
 
 			void assign (size_type n, const value_type& val){
+				for (size_type i = 0; i < this->_size; i++)
+						this->_alloc.destroy(this->_container + i);
 				if(this->_size)
 					this->_alloc.deallocate(this->_container, this->_capacity);
 				this->_size = 0;
@@ -231,6 +239,8 @@ namespace ft {
 			void push_back (const value_type& val){
 				if(this->_size == this->_capacity)
 					this->reserve(this->_capacity * 2);
+				if(this->_capacity == 0)
+					this->reserve(1);
 				this->_alloc.construct(this->_container + this->_size, val);
 				this->_size++;
 			}
@@ -248,6 +258,8 @@ namespace ft {
 				tmp = this->_alloc.allocate(this->_capacity);
 				for (size_type i = 0; i < this->_size; i++)
 					this->_alloc.construct(tmp + i, *(this->_container + i));
+				for (size_type i = 0; i < this->_size; i++)
+						this->_alloc.destroy(this->_container + i);
 				this->_alloc.deallocate(this->_container, this->_capacity);
 				this->_container = tmp;
 				size_type i = 0;
@@ -280,6 +292,8 @@ namespace ft {
 					this->_alloc.construct(tmp + j + (n - 1), this->_container[j - 1]);
 				for (size_type j = 0; j < n; j++)
 					this->_alloc.construct(tmp + t + j, val);
+				for (size_type i = 0; i < this->_size; i++)
+						this->_alloc.destroy(this->_container + i);
 				this->_alloc.deallocate(this->_container, this->_capacity);
 				this->_container = tmp;
 				this->_size += n;
@@ -297,6 +311,8 @@ namespace ft {
 				tmp = this->_alloc.allocate(this->_capacity);
 				for (size_type i = 0; i < this->_size; i++)
 					this->_alloc.construct(tmp + i, *(this->_container + i));
+				for (size_type i = 0; i < this->_size; i++)
+						this->_alloc.destroy(this->_container + i);
 				this->_alloc.deallocate(this->_container, this->_capacity);
 				this->_container = tmp;
 				size_type i = 0;

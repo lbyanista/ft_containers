@@ -6,8 +6,6 @@ namespace ft {
     template <class T, class Container = vector<T> >
     class stack
     {
-        protected:
-            container_type c;
 
         public:
 
@@ -15,6 +13,10 @@ namespace ft {
         typedef T			value_type;
         typedef size_t		size_type;
 
+        protected:
+            container_type c;
+
+		public:
 
         explicit stack (const container_type& ctnr = container_type()){
             c = ctnr;
