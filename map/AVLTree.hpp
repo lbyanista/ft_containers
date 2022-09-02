@@ -149,10 +149,132 @@ namespace ft
 
             typedef AVLTree<T, Comp, Duplicate> tree_type;
 
+            Comp _comp;
             _node* _root;
-            size_type _size;
-            key_compare _comp;
-        
+            _node* _snt;
+            size_type _lenght;
+
+            bool _comp_node(T const &val, _node *node)const {
+                if(node == _snt)
+                    return false;
+                return _comp(node->value, val);
+            }
+
+            static difference_type _balance_factor(_node* node)
+            {
+                if (!node)
+                    return 0;
+                return height(node->left) - height(node->right);
+            }
+
+            static void _rotate_left(_node **target)
+            {
+                _node *tmp = (*target)->right;
+                _node *parent = (*target)->parent;
+                (*target)->parent = tmp;
+                tmp->parent = parent;
+                (*target)->right = tmp->left;
+                tmp->left = *target;
+                (*target)->height = max((*target)->left ? (*target)->left->height : -1,
+                                        (*target)->right ? (*target)->right->height : -1) + 1;
+                *target = tmp;
+                tmp->height = max(tmp->left ? tmp->left->height : -1,
+                                tmp->right ? tmp->right->height : -1) + 1;
+            }
+
+            static void _rotate_right(_node **target)
+            {
+                _node *tmp = (*target)->left;
+                _node *parent = (*target)->parent;
+                (*target)->parent = tmp;
+                tmp->parent = parent;
+                (*target)->left = tmp->right;
+                tmp->right = *target;
+                (*target)->height = max((*target)->left ? (*target)->left->height : -1,
+                                        (*target)->right ? (*target)->right->height : -1) + 1;
+                *target = tmp;
+                tmp->height = max(tmp->left ? tmp->left->height : -1,
+                                tmp->right ? tmp->right->height : -1) + 1;
+            }
+
+
+            void _rebalance(_node *node)
+            {
+                if (node->left)
+                    _reclear(node->left);
+                if (node->right)
+                    _reclear(node->right);
+                if(node != _snt)
+                    delete node;
+            }
+
+            void _ereas_rebalance(_node *parent)
+            {
+                for (_node *p = parent; p; p = p->parent){
+                    p->height = max(p->left ? p->left->height : -1,
+                                    p->right ? p->right->height : -1) + 1;
+
+                    if (_balance_factor(p) <= -2 || _balance_factor(p) >= 2)
+                    {
+                        _node *x = p;
+                        _node *y = x->left->height > x->right->height ? x->left : x->right;
+                        _node *z ;
+
+                        if(y->left->height > y->right->height)
+                            z = y == x->left ? y->left : y->right;
+                        else
+                            z = y->left->height > y->right->height ? y->left : y->right;
+
+                        if (y == x->left)
+                        {
+                            if(z == x->left->right)
+                                _rotate_left(y);
+                            _rotate_right(x);
+                        }
+
+                        else if(y == x->right)
+                        {
+                            if(z == x->right->left)
+                                _rotate_right(y);
+                            _rotate_left(x);
+                        }
+                    }
+                }
+            }
+
+
+            // from here 02/09/2022
+            void _insert_rebalance(_node *node)
+            {
+                for (_node *p = node; p; p = p->parent){
+                    p->height = max(p->left ? p->left->height : -1,
+                                    p->right ? p->right->height : -1) + 1;
+
+                    if (_balance_factor(p) <= -2 || _balance_factor(p) >= 2)
+                    {
+                        _node *x = p;
+                        _node *y = x->left->height > x->right->height ? x->left : x->right;
+                        _node *z ;
+                        if(y->left->height > y->right->height)
+                            z = y == x->left ? y->left : y->right;
+                        else
+                            z = y->left->height > y->right->height ? y->left : y->right;
+                        if (y == x->left)
+                        {
+                            if(z == x->left->right)
+                                _rotate_left(y);
+                            _rotate_right(x);
+                        }
+
+                        else if(y == x->right)
+                        {
+                            if(z == x->right->left)
+                                _rotate_right(y);
+                            _rotate_left(x);
+                        }
+                    }
+                }
+            }
 
     };
 };
