@@ -244,37 +244,342 @@ namespace ft
 
 
             // from here 02/09/2022
-            void _insert_rebalance(_node *node)
+            void _insert_rebalance(_node *insert)
             {
-                for (_node *p = node; p; p = p->parent){
-                    p->height = max(p->left ? p->left->height : -1,
-                                    p->right ? p->right->height : -1) + 1;
+                for(_node *node = insert; node; node = node->parent){
+                    node->height = max(node->left ? node->left->height : -1,
+                                        node->right ? node->right->height : -1) + 1;
 
-                    if (_balance_factor(p) <= -2 || _balance_factor(p) >= 2)
+                    _node **x ;
+                    if(!node->parent)
+                        x = &_root;
+                    else
+                        x = node->parent->left == node ? &node->parent->left : &node->parent->right;
+                    if(_balance_factor(node) < -1)
                     {
-                        _node *x = p;
-                        _node *y = x->left->height > x->right->height ? x->left : x->right;
-                        _node *z ;
-                        if(y->left->height > y->right->height)
-                            z = y == x->left ? y->left : y->right;
-                        else
-                            z = y->left->height > y->right->height ? y->left : y->right;
-                        if (y == x->left)
-                        {
-                            if(z == x->left->right)
-                                _rotate_left(y);
-                            _rotate_right(x);
-                        }
+                        if(_balance_factor(node->right) > 0)
+                            _rotate_right(&(*x)->right);
+                        _rotate_left(x);
+                        break;
+                    }
 
-                        else if(y == x->right)
-                        {
-                            if(z == x->right->left)
-                                _rotate_right(y);
-                            _rotate_left(x);
-                        }
+                    else if(_balance_factor(node) > 1)
+                    {
+                        if(_balance_factor(node->left) < 0)
+                            _rotate_left(&(*x)->left);
+                        _rotate_right(x);
+                        break;
                     }
                 }
             }
 
+            public:
+                AVLTree(const Comp& comp = Comp()) : _comp(comp), _lenght(0)
+                {
+                    _root = new _node(E(), NULL, NULL, NULL, 0);
+                    _snt = _root;
+                }
+
+                AVLTree(const _Self &o): _comp (o._comp), _lenght(0)
+                {
+                    _root = new _node(E(), NULL, NULL, NULL, 0);
+                    _snt = _root;
+                    insert(o.begin(), o.end());
+                }
+
+                Comp const &compare()const {
+                    return _comp;
+                }
+
+                ~AVLTree()
+                {
+                    clear();
+                    delete _snt;
+                }
+
+                _self &operator=(const _Self &o)
+                {
+                    if (this != &o)
+                    {
+                        clear();
+                        insert(o.begin(), o.end());
+                    }
+                    return *this;
+                }
+
+                iterator begin()
+                {
+                    _node *node = _root;
+                    while (node->left != _snt)
+                        node = node->left;
+                    return iterator(node);
+                }
+
+                const_iterator begin() const
+                {
+                    _node *node = _root;
+                    while (node->left != _snt)
+                        node = node->left;
+                    return const_iterator(node);
+                }
+
+                iterator end()
+                {
+                    return iterator(_snt);
+                }
+
+                const_iterator end() const
+                {
+                    return const_iterator(_snt);
+                }
+
+                reverse_iterator rbegin(){
+                    return reverse_iterator(end());
+                }
+
+                const_reverse_iterator rbegin() const{
+                    return const_reverse_iterator(end());
+                }
+
+                reverse_iterator rend(){
+                    return reverse_iterator(begin());
+                }
+
+                const_reverse_iterator rend() const{
+                    return const_reverse_iterator(begin());
+                }
+
+                bool empty() const
+                {
+                    return _lenght == 0;
+                }
+
+                size_type size() const
+                {
+                    return _lenght;
+                }
+
+                size_type max_size() const
+                {
+                    return std::numeric_limits<size_type>::max() / sizeof(value_type); // maybe delete /
+                }
+
+                Pair<iterator, bool> insert(const value_type &val){
+                    return insert(iterator(_root), val);
+                }
+
+                Pair<iterator, bool> insert(iterator h, const value_type &val){
+                    (void)h;
+                    _node *part = _root;
+                    _node *new_node;
+
+                    while(1){
+                        if(part == _snt){
+                            _node *parent = _snt->parent;
+                            _node *&place = parent ? parent->right : _root;
+
+                            new_node = new _node(val, parent, NULL, _snt, 0);
+                            place = new_node;
+                            _snt->parent = new_node;
+                            break;
+                        }
+
+                        bool res = _comp(val, part->e1);
+
+                        if(!Duplicate && !res && !_comp(part->e1, val)){
+                            return make_pair(iterator(part), false);
+                        }
+
+                        if(res){
+                            if(part->left)
+                                part = part->left;
+                            else 
+                            {
+                                new_node = new _node(val, part, NULL, NULL, 0);
+                                part->left = new_node;
+                                break;
+                            }
+                        }
+
+                        else 
+                        {
+                            if(part->right)
+                                part = part->right;
+                            else 
+                            {
+                                new_node = new _node(val, part, NULL, NULL, 0);
+                                part->right = new_node;
+                                break;
+                            }
+                        }
+                    }
+                    
+                    _lenght++;
+                    return make_pair(iterator(new_node), true);
+                }
+
+                template <class InputIterator>
+                void insert(InputIterator first, InputIterator last)
+                {
+                    for (; first != last; ++first)
+                        insert(*first);
+                }
+
+                void erase(iterator position)
+                {
+                    _node *node = position._node;
+                    _node *parent = node->parent;
+                    _node *left = node->left;
+                    _node *right = node->right;
+
+                    if(left == _snt && right == _snt){
+                        if(parent){
+                            if(parent->left == node)
+                                parent->left = NULL;
+                            else
+                                parent->right = NULL;
+                        }
+                        else
+                            _root = NULL;
+                    }
+
+                    else if(left == _snt){
+                        if(parent){
+                            if(parent->left == node)
+                                parent->left = right;
+                            else
+                                parent->right = right;
+                        }
+                        else
+                            _root = right;
+                        right->parent = parent;
+                    }
+
+                    else if(right == _snt){
+                        if(parent){
+                            if(parent->left == node)
+                                parent->left = left;
+                            else
+                                parent->right = left;
+                        }
+                        else
+                            _root = left;
+                        left->parent = parent;
+                    }
+
+                    else{
+                        _node *next = node->right;
+                        while(next->left != _snt)
+                            next = next->left;
+
+                        _node *next_parent = next->parent;
+                        _node *next_right = next->right;
+
+                        if(next_parent->left == next)
+                            next_parent->left = next_right;
+                        else
+                            next_parent->right = next_right;
+                        if(next_right != _snt)
+                            next_right->parent = next_parent;
+
+                        if(parent){
+                            if(parent->left == node)
+                                parent->left = next;
+                            else
+                                parent->right = next;
+                        }
+                        else
+                            _root = next;
+                        next->parent = parent;
+
+                        next->left = left;
+                        left->parent = next;
+
+                        next->right = right;
+                        right->parent = next;
+                    }
+
+                    delete node;
+                    _lenght--;
+                }
+
+                void ereas(iterator first, iterator last)
+                {
+                    while (first != last)
+                        erase(first++);
+                }
+
+                void swap(AVLTree <T, Comp, Duplicate> &o)
+                {
+                    std::swap(_root, o._root);
+                    std::swap(_snt, o._snt);
+                    std::swap(_lenght, o._lenght);
+                }
+
+                void clear(){
+                    _rebalance(_root); // recleare
+                    _snt->left = NULL;
+                    _snt->right = NULL;
+                    _snt->height = 0;
+                    _root = _snt;
+                    _lenght = 0;
+                }
+
+                iterator find(const key_type &key)
+                {
+                    _node *node = _root;
+                    while (node != _snt)
+                    {
+                        if (_comp(key, node->e1))
+                            node = node->left;
+                        else if (_comp(node->e1, key))
+                            node = node->right;
+                        else
+                            return iterator(node);
+                    }
+                    return end();
+                }
+
+                const_iterator find(const key_type &key) const
+                {
+                    _node *node = _root;
+                    while (node != _snt)
+                    {
+                        if (_comp(key, node->e1))
+                            node = node->left;
+                        else if (_comp(node->e1, key))
+                            node = node->right;
+                        else
+                            return const_iterator(node);
+                    }
+                    return end();
+                }
+
+                size_type count(const value_type &val) const
+                {
+                    size_type count = 0;
+                    _node *node = _root;
+
+                    while (node && node != _snt)
+                    {
+                        bool ret = _comp(node->e1, val);
+                        if(!ret && !_comp(val, node->e1))
+                        {
+                            if(Duplicate)
+                                count++;
+                            else
+                                return 1;
+                            node = node->right;
+                        }
+                        else if(!ret)
+                            node = node->left;
+                        else
+                            node = node->right;
+                    }
+
+                    return count;
+                }
+
+                
     };
 };
