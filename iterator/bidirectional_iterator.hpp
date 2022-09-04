@@ -1,5 +1,6 @@
 #pragma once
-#include "../utility/*.hpp"
+#include "../utility/distance.hpp"
+#include "../utility/enable_if.hpp"
 
 namespace ft
 {
@@ -8,10 +9,6 @@ namespace ft
     template <typename T>
     class bidirectional_iterator
     {
-
-        private:
-            node_pointer _current;
-            node_pointer* _ptr;
 
         public:
             typedef ptrdiff_t           difference_type;
@@ -158,5 +155,9 @@ namespace ft
             {
                 return _current != other._current;
             }
+
+            private:
+            node_pointer _current;
+            node_pointer* _ptr;
     };
 };

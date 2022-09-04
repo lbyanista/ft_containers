@@ -1,5 +1,8 @@
 #pragma once
 
+#include "../utility/distance.hpp"
+#include "../iterator/bidirectional_iterator.hpp"
+
 namespace ft
 {
     template <typename T, typename Comp, bool Duplicate>
@@ -14,15 +17,15 @@ namespace ft
             typedef T value_type;
             typedef T* pointer;
             typedef T& reference;
-            typedef bidirectional_iterator_tag iterator_category;
+            typedef ft::bidirectional_iterator iterator_category;
 
         private:
             typedef AVLTree<T, Comp, Duplicate> tree_type;
-            typedef Node node_type;
+            typedef Node _node;
             typedef AVLTreeIterator<T, Comp, Duplicate, Node> self_type;
 
-            node_type* _current;
-            AVLTreeIterator(node_type* current) : _current(current) {}
+            _node* _current;
+            AVLTreeIterator(_node* current) : _current(current) {}
 
         public:
 
@@ -280,7 +283,7 @@ namespace ft
                     _snt = _root;
                 }
 
-                AVLTree(const _Self &o): _comp (o._comp), _lenght(0)
+                AVLTree(const self_type &o): _comp (o._comp), _lenght(0)
                 {
                     _root = new _node(E(), NULL, NULL, NULL, 0);
                     _snt = _root;
@@ -297,7 +300,7 @@ namespace ft
                     delete _snt;
                 }
 
-                _self &operator=(const _Self &o)
+                self_type &operator=(const self_type &o)
                 {
                     if (this != &o)
                     {
