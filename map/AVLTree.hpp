@@ -9,7 +9,7 @@
 
 namespace ft
 {
-    template <class value_type, class Compare = std::less<typename value_type::first_type>, class Alloc = std::allocator<value_type>>
+    template <class value_type, class Compare = std::less<typename value_type::first_type>, class Alloc = std::allocator<value_type> >
     class AVLTree{
         public:
         typedef size_t  size_type;
@@ -32,13 +32,13 @@ namespace ft
         typename Alloc::template rebind<Node>::other    _alloc_node;
         Alloc                                           _alloc_pair;
 
-        AVLtree(){
+        AVLTree(){
             this->_node = NULL;
             this->_end_node = _alloc_node.allocate(1);
             this->_end_node->height = 19;
         }
 
-        ~AVLtree(){
+        ~AVLTree(){
             _alloc_node.deallocate(_end_node, 1);
         }
 
@@ -64,7 +64,7 @@ namespace ft
         }
 
         int max(int i, int j){
-            return a > b? a : b;
+            return i > j? i : j;
         }
 
         int node_hieght(Node *node){
@@ -76,7 +76,7 @@ namespace ft
         int balance(Node *node){
             if(node == NULL)
                 return 0;
-            return (node->height(node->left) - node->height(node->right))
+            return (node->height(node->left) - node->height(node->right));
         }
 
         /*
@@ -93,7 +93,7 @@ namespace ft
         Node *rotate_right(Node *r){
             Node *y = r->left;
 			Node *T = y->right;
-			y->right = z;
+			y->right = r;
 			r->left = T;
 			
 			y->parent = r->parent;
@@ -128,13 +128,13 @@ namespace ft
 				T->parent = l;
 			l->height = this->max(this->node_height(l->left), this->node_height(l->right)) + 1;
 			y->height = this->max(this->node_height(y->left), this->node_height(y->right)) + 1;
-			return (y)
+			return (y);
         }
 
         Node *insert(Node * &node, key k, T value, Node *parent = NULL){
             Node *tmp;
             if(!node){
-                node = this->new_node(ft::make_pair<key, T>(key, value), parent);
+                node = this->new_node(ft::make_pair<key, T>(k, value), parent);
                 tmp = node;
                 this->_node = getHead(node);
                 return tmp;
@@ -220,12 +220,12 @@ namespace ft
                 }
             }
 
-            node->height = 1 + max(node_hieght(node->left), node_hieght(node->right))
+            node->height = 1 + max(node_hieght(node->left), node_hieght(node->right));
 
             int balance = balance(node);
 
             if(balance > 1 && balance(node->left) > -1)
-                node = rotate_right(node)
+                node = rotate_right(node);
             if(balance < -1 && balance(node->right) < 1)
                 node = rotate_left(node);
 
@@ -257,7 +257,7 @@ namespace ft
 
         void remove_tree(Node *&node){
             if(!node)
-                return NULL;
+                return ;
             remove_tree(node->left);
             remove_tree(node->right);
             this->_alloc_node.deallocate(node, 1);
@@ -280,7 +280,7 @@ namespace ft
 				return (min_node(node->right));
 
 			Node *node_parent = node->parent;
-			while(nodeParent != NULL && node == nodeParent->right) {
+			while(node_parent != NULL && node == node_parent->right) {
 				node = node_parent;
 				node_parent = node_parent->parent;
 			}
