@@ -13,8 +13,8 @@ namespace ft
     class AVLTree{
         public:
         typedef size_t  size_type;
-        typedef typename value_type::first_type key;
-        typedef typename value_type::sec T;
+        typedef typename value_type::first_type     key;
+        typedef typename value_type::second_type    T;
 
         typedef struct node
         {
