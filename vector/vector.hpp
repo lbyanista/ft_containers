@@ -63,6 +63,7 @@ namespace ft {
 				this->_size = d;
 				this->_capacity = d;
 				this->_container = NULL;
+				this->_container = this->_alloc.allocate(d);
 				for (size_type i = 0; i < d; i++)
 					this->_alloc.construct(this->_container + i, *(first + i));
 			};
