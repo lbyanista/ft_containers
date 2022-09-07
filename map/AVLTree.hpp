@@ -180,8 +180,147 @@ namespace ft
             return (tmp);
         }
 
-        
+        Node *max_node(const Node *node) const {
+            Node *tmp = (Node*)node;
 
+            while(tmp->right)
+                tmp = tmp->right;
+            return tmp;
+        }
+
+        void delete_node(Node *&node, key k){
+            if(!node)
+                return ;
+            if(this->_ob_comp(node->value->first, k))
+                delete_node(node->right, k);
+            else if(this->_ob_comp(k, node->value->first))
+                delete_node(node->left, k);
+            else {
+                if(!node->left || !node->right){
+                    Node *tmp = node->left ? node->left : node->right;
+                    if(!tmp){
+                        tmp = node;
+                        node = NULL;
+                    }
+                    else
+                    {
+                        std::swap(node->value, tmp->value);
+                        node->right = tmp->right;
+                        node->left = tmp->left;
+                        node->height = tmp->height;
+                    }
+
+                    this->_alloc_pair.deallocate(tmp->value, 1);
+                    this->_alloc_node.deallocate(tmp, 1);
+                }
+                else {
+                    Node *min = min_node(node->right);
+                    std::swap(min->value, node->value);
+                    this->delete_node(node->right, min->value->first);
+                }
+            }
+
+            node->height = 1 + max(node_hieght(node->left), node_hieght(node->right))
+
+            int balance = balance(node);
+
+            if(balance > 1 && balance(node->left) > -1)
+                node = rotate_right(node)
+            if(balance < -1 && balance(node->right) < 1)
+                node = rotate_left(node);
+
+            if(balance > 1 && balance(node->left) < 0){
+                node->left = rotate_left(node->left);
+                node = rotate_right(node);
+            }
+            if(balance < -1 && balance(node->right) > 0){
+                node->right = rotate_right(node->right);
+                node = rotate_left(node);
+            }
+
+            this->node = getHead(node);
+        }
+
+        Node *find(Node *node, key k) const {
+            Node *tmp;
+
+            if (!node)
+                return NULL;
+            tmp = node;
+
+            if(this->_ob_comp(node->value->first, k))
+                tmp = find(node->right, k);
+            else if (this->_ob_comp(k, node->value->first))
+                tmp = find(node->left, k);
+            return tmp;
+        }
+
+        void remove_tree(Node *&node){
+            if(!node)
+                return NULL;
+            remove_tree(node->left);
+            remove_tree(node->right);
+            this->_alloc_node.deallocate(node, 1);
+            this->_alloc_pair.deallocate(node->value, 1);
+            node = NULL;
+        }
+
+        bool empty(Node *node){
+            return (node == NULL);
+        }
+
+        size_type max_size() const {
+            return this->_alloc_node.max_size();
+        }
+
+        Node *getsuccesor(const Node *node) const {
+            if (!node)
+				return NULL;
+			if (node->right)
+				return (min_node(node->right));
+
+			Node *node_parent = node->parent;
+			while(nodeParent != NULL && node == nodeParent->right) {
+				node = node_parent;
+				node_parent = node_parent->parent;
+			}
+			return (node_parent);
+        }
+
+        Node *getpresuccesor(const Node *node) const {
+			if (!node)
+				return (NULL);
+            
+			if (node->left)
+				return (max_node(node->left));
+			Node *node_parent = node->parent;
+			while (node_parent != NULL && node == node_parent->left) {
+				node = node_parent;
+				node_parent = node_parent->parent;
+			}
+			return (node_parent);
+        }
+
+
+        ft::pair<T&, bool> operator[] (const key &k){
+            Node    *tmp = this->find(this->_node, k);
+			if (tmp != NULL)
+				return (ft::make_pair<T&, bool>(tmp->value->second, false));
+			tmp = this->insert(this->_node, k, T());
+			return (ft::make_pair<T&, bool>(tmp->value->second, true));
+        }
+
+        Node* bound(const Node *node, const key &k) const
+        {
+        	Node *current = min_node((Node *)node);
+			while (current)
+			{
+				if (this->_ob_comp(k, current->value->first))
+                    return current;
+				current = getsuccesor(current);
+			}
+			return this->_end_node;
+        }
         
     };
 
