@@ -73,7 +73,7 @@ namespace ft
             return node->height;
         }
 
-        int balance(Node *node){
+        int balanced(Node *node){
             if(node == NULL)
                 return 0;
             return (node->height(node->left) - node->height(node->right));

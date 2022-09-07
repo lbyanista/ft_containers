@@ -56,8 +56,8 @@ namespace ft {
 
         public:
         //maybe i need to implement new map_iterator to replace vec_iterator with
-        typedef		map_iterator<value_type, Node, Tree>			    iterator;
-		typedef		map_iterator<const value_type, const Node, Tree>    const_iterator;
+        typedef		map_iterator<value_type, Node, Tree>			        iterator;
+		typedef		map_iterator<const value_type, const Node, Tree>        const_iterator;
 		typedef		ft::reverse_iterator<iterator>						    reverse_iterator;
 		typedef		ft::reverse_iterator<const_iterator>				    const_reverse_iterator;
 
