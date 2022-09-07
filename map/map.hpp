@@ -5,6 +5,7 @@
 #include <iostream>
 #include "../vector/vector.hpp"
 #include "../iterator/iterator.hpp"
+#include "../iterator/map_iterator.hpp"
 
 namespace ft {
     template <class Key, class T, class Compare = std::less<Key>, class Alloc = std::allocator<ft::pair<const Key, T> > >
@@ -55,8 +56,8 @@ namespace ft {
 
         public:
         //maybe i need to implement new map_iterator to replace vec_iterator with
-        typedef		ft::vec_iterator<value_type, Node, Tree>			    iterator;
-		typedef		ft::vec_iterator<const value_type, const Node, Tree>    const_iterator;
+        typedef		map_iterator<value_type, Node, Tree>			    iterator;
+		typedef		map_iterator<const value_type, const Node, Tree>    const_iterator;
 		typedef		ft::reverse_iterator<iterator>						    reverse_iterator;
 		typedef		ft::reverse_iterator<const_iterator>				    const_reverse_iterator;
 
