@@ -7,7 +7,7 @@
 
 #include "../utility/enable_if.hpp"
 #include "../utility/is_integral.hpp"
-#include "../utility/distance.hpp"
+// #include "../utility/distance.hpp"
 #include "../utility/equal.hpp"
 #include "../utility/lexicographical_compare.hpp"
 
