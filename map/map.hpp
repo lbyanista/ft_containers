@@ -13,18 +13,18 @@ namespace ft {
     public:
         typedef Key									key_type;
 		typedef T									mapped_type;
-		typedef Compare								key_comp;
+		typedef Compare								key_compare;
 		typedef pair<const key_type, mapped_type>	value_type;
 
 
         //binary function is requierd in c++98 to inherit value_type, value_type, bool
-        typedef class val_comp : public std::binary_function<value_type, value_type, bool>{
+        typedef class val_compare : public std::binary_function<value_type, value_type, bool>{
             friend class map;
 
             protected:
             Compare cmp;
 
-            val_comp(Compare c) : cmp(c){}
+            val_compare(Compare c) : cmp(c){}
 
             public:
             typedef bool result_type;
@@ -34,7 +34,7 @@ namespace ft {
             bool operator() (const value_type &x, const value_type &y) const {
                 return cmp(x.first, y.first);
             }
-        } value_comp;
+        } value_compare;
 
         typedef		Alloc												allocator_type;
 		typedef		typename	allocator_type::reference				reference;
@@ -51,7 +51,7 @@ namespace ft {
 		Tree				_tree;
 		size_type			_size;
 		allocator_type		_map_alloc;
-		key_comp			_key_map_comp;
+		key_compare			_key_map_comp;
 		int a;
 
         public:
@@ -62,7 +62,7 @@ namespace ft {
 		typedef		ft::reverse_iterator<const_iterator>				    const_reverse_iterator;
 
 
-        explicit map (const key_comp& comp = key_comp(), const allocator_type& alloc = allocator_type()){
+        explicit map (const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()){
 			this->_tree._node = NULL;
 			this->_map_alloc = alloc;
 			this->_key_map_comp = comp;
@@ -72,7 +72,7 @@ namespace ft {
 		}
 
         template <class InputIterator>
-		map (InputIterator first, InputIterator last, const key_comp& comp = key_comp(), const allocator_type& alloc = allocator_type()) {
+		map (InputIterator first, InputIterator last, const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()) {
 			this->_tree._node = NULL;
 			this->_map_alloc = alloc;
 			this->_key_map_comp = comp;
@@ -284,11 +284,11 @@ namespace ft {
             return (ft::make_pair(lower_bound(k), upper_bound(k)));
         }
 
-        key_comp key_cmp() const {
+        key_compare key_comp() const {
 			return (this->_key_map_comp);
 		}
 
-		value_comp value_cmp() const {
+		value_compare value_comp() const {
 			return (value_compare(this->_key_map_comp));
 		}
 
@@ -310,12 +310,12 @@ namespace ft {
         //         return comp(x.first, y.first);
         //     }
 
-        //     explicit map (const key_compare& comp = key_compare(),
+        //     explicit map (const key_compareare& comp = key_compareare(),
         //       const allocator_type& alloc = allocator_type()){
         //         std::cout << "map constructor" << std::endl;}
         //     template <class InputIterator>
         //     map (InputIterator first, InputIterator last,
-        //       const key_compare& comp = key_compare(),
+        //       const key_compareare& comp = key_compareare(),
         //       const allocator_type& alloc = allocator_type()){
         //         std::cout << "map constructor" << std::endl;}
 
@@ -331,4 +331,4 @@ namespace ft {
             
         //     };
     };
-};
+}
