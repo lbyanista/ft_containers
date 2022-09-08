@@ -58,7 +58,7 @@ namespace ft {
 			template <class InputIterator>
          	vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type(), 
 					typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type = InputIterator()) {
-				size_type d = (size_type)ft::distance(first, last);
+				size_type d = (size_type)std::distance(first, last);
 				this->_alloc = alloc;
 				this->_size = d;
 				this->_capacity = d;
@@ -239,7 +239,7 @@ namespace ft {
 			//modifier
 			template <class InputIterator>
 			void assign (InputIterator first, InputIterator last){
-				size_type n = (size_type)ft::distance(first, last);
+				size_type n = (size_type)std::distance(first, last);
             	if (n > this->_capacity)
                 	reserve(n);
             	for (size_type i = 0; i < this->_size; i++)
@@ -278,7 +278,7 @@ namespace ft {
 
 			//insert
 			iterator insert(iterator position, const value_type& val){
-				size_type d = (size_type)ft::distance(begin(), position);
+				size_type d = (size_type)std::distance(begin(), position);
             	if (this->_capacity == 0)
                 	reserve(1);
             	else if (this->_size == this->_capacity)
@@ -291,7 +291,7 @@ namespace ft {
 			}
 
 			void insert(iterator position, size_type n, const value_type& val){
-				difference_type d = ft::distance(begin(), position);
+				difference_type d = std::distance(begin(), position);
             	if (this->_capacity == 0 || (this->_size + n) > (this->_capacity * 2))
                 	reserve(this->_size + n);
             	else if ((this->_size + n) > this->_capacity)
@@ -305,8 +305,8 @@ namespace ft {
 
 			template <class InputIterator>
 			void insert (iterator position, InputIterator first, InputIterator last){
-				difference_type d = ft::distance(begin(), position);
-            	size_type n = ft::distance(first, last);
+				difference_type d = std::distance(begin(), position);
+            	size_type n = std::distance(first, last);
 
             	if (this->_capacity == 0 || (this->_size + n) > (this->_capacity * 2))
                 	reserve(this->_size + n);
@@ -323,7 +323,7 @@ namespace ft {
 
 
 			iterator erase (iterator position){
-				size_type d = (size_type)ft::distance(begin(), position);
+				size_type d = (size_type)std::distance(begin(), position);
             	this->_alloc.destroy(this->_container + d);
             	for (size_type i = d; i < this->_size; i++)
                 	this->_alloc.construct(this->_container + i, this->_container[i + 1]);
@@ -332,8 +332,8 @@ namespace ft {
 			}
 
 			iterator erase (iterator first, iterator last){
-				size_type d = ft::distance(begin(), first);
-            	size_type n = ft::distance(first, last);
+				size_type d = std::distance(begin(), first);
+            	size_type n = std::distance(first, last);
             	for (size_type i = d; i < n + d; i++)
                 	this->_alloc.destroy(this->_container + i);
             	this->_size -= n;

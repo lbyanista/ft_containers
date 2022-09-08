@@ -237,7 +237,7 @@ namespace ft
                 node = rotate_left(node);
             }
 
-            this->node = getHead(node);
+            this->_node = getHead(node);
         }
 
         Node *search(Node *node, key k) const {
