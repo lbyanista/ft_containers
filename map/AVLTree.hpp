@@ -3,7 +3,6 @@
 #include <iostream>
 #include <memory>
 #include "../utility/pair.hpp"
-#include "../utility/make_pair.hpp"
 #include "../iterator/reverse_iterator.hpp"
 #include <cmath>
 
@@ -67,7 +66,7 @@ namespace ft
             return i > j? i : j;
         }
 
-        int node_hieght(Node *node){
+        int node_height(Node *node){
             if(node == NULL)
                 return 0;
             return node->height;
@@ -76,7 +75,7 @@ namespace ft
         int balanced(Node *node){
             if(node == NULL)
                 return 0;
-            return (node->height(node->left) - node->height(node->right));
+            return (node_height(node->left) - node_height(node->right));
         }
 
         /*
@@ -155,20 +154,20 @@ namespace ft
             node->height = 1 + max(node_height(node->left), node_height(node->right));
             int balance = balanced(node);
 
-            if(balance > 1 && this->_ob_comp(k, node->left->value->first))
+            if(balance > 1 && this->_ob_comp(k, node->left->value->first) == true)
                 node = rotate_right(node);
-            if(balance < -1 && this->_ob_comp(node->right->value->first, k))
+            if(balance < -1 && this->_ob_comp(node->right->value->first, k) == true)
                 node = rotate_left(node);
 
-            if(balance > 1 && this->_ob_comp(node->left->value->first, k)){
+            if(balance > 1 && this->_ob_comp(node->left->value->first, k) == true){
                 node->left = rotate_left(node->left);
                 node = rotate_right(node);
             }
-            if(balance < -1 && this->_ob_comp(k, node->right-value->first)){
+            if(balance < -1 && this->_ob_comp(k, node->right->value->first)){
                 node->right = rotate_right(node->right);
                 node = rotate_left(node);
             }
-            this->node = getHead(node);
+            this->_node = getHead(node);
             return tmp;
         }
 
@@ -224,16 +223,16 @@ namespace ft
 
             int balance = balance(node);
 
-            if(balance > 1 && balance(node->left) > -1)
+            if(balance > 1 && balanced(node->left) > -1)
                 node = rotate_right(node);
-            if(balance < -1 && balance(node->right) < 1)
+            if(balance < -1 && balanced(node->right) < 1)
                 node = rotate_left(node);
 
-            if(balance > 1 && balance(node->left) < 0){
+            if(balance > 1 && balanced(node->left) < 0){
                 node->left = rotate_left(node->left);
                 node = rotate_right(node);
             }
-            if(balance < -1 && balance(node->right) > 0){
+            if(balance < -1 && balanced(node->right) > 0){
                 node->right = rotate_right(node->right);
                 node = rotate_left(node);
             }
@@ -241,17 +240,17 @@ namespace ft
             this->node = getHead(node);
         }
 
-        Node *find(Node *node, key k) const {
+        Node *search(Node *node, key k) const {
             Node *tmp;
 
-            if (!node)
+            if (node == NULL)
                 return NULL;
             tmp = node;
 
             if(this->_ob_comp(node->value->first, k))
-                tmp = find(node->right, k);
+                tmp = search(node->right, k);
             else if (this->_ob_comp(k, node->value->first))
-                tmp = find(node->left, k);
+                tmp = search(node->left, k);
             return tmp;
         }
 
@@ -303,7 +302,7 @@ namespace ft
 
 
         ft::pair<T&, bool> operator[] (const key &k){
-            Node    *tmp = this->find(this->_node, k);
+            Node    *tmp = this->search(this->_node, k);
 			if (tmp != NULL)
 				return (ft::make_pair<T&, bool>(tmp->value->second, false));
 			tmp = this->insert(this->_node, k, T());

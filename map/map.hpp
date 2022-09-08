@@ -152,7 +152,7 @@ namespace ft {
 
         mapped_type &operator[] (const key_type &k){
             ft::pair<T&, bool> res = _tree[k];
-			if (res.second)
+			if (res.second == true)
 				++(this->_size);
 			return (res.first);
         }
@@ -230,7 +230,7 @@ namespace ft {
 		}
 
         iterator find (const key_type& k) {
-			Node *n = _tree.find(_tree._node, k);
+			Node *n = _tree.search(_tree._node, k);
 			if (n)
 				return (iterator(this->_tree, n));
 			return (this->end());
