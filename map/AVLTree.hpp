@@ -219,7 +219,7 @@ namespace ft
                 }
             }
 
-            node->height = 1 + max(node_hieght(node->left), node_hieght(node->right));
+            node->height = 1 + max(node_height(node->left), node_height(node->right));
 
             int balance = balanced(node);
 
