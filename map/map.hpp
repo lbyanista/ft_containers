@@ -212,13 +212,16 @@ namespace ft {
 		}
 
         void swap (map& x) {
-			Tree tree = x._tree;
+			Tree tree;
+			size_type   size_tmp;
 			Node *end_node = tree._end_node;
-			x._tree = this->_tree;
+
+			tree = x._tree;
+            x._tree = this->_tree;
 			this->_tree = tree;
 			tree._end_node = end_node;
 
-			size_type size_tmp = x._size;
+            size_tmp = x._size;
 			x._size = this->_size;
 			this->_size = size_tmp;
 		}
