@@ -221,7 +221,7 @@ namespace ft
 
             node->height = 1 + max(node_hieght(node->left), node_hieght(node->right));
 
-            int balance = balance(node);
+            int balance = balanced(node);
 
             if(balance > 1 && balanced(node->left) > -1)
                 node = rotate_right(node);
