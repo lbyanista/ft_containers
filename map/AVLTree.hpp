@@ -67,13 +67,13 @@ namespace ft
         }
 
         int node_height(Node *node){
-            if(node == NULL)
+            if(!node)
                 return 0;
             return node->height;
         }
 
         int balanced(Node *node){
-            if(node == NULL)
+            if(!node)
                 return 0;
             return (node_height(node->left) - node_height(node->right));
         }
@@ -188,16 +188,16 @@ namespace ft
         }
 
         void delete_node(Node *&node, key k){
-            if(node == NULL)
+            if(!node)
                 return ;
             if(this->_ob_comp(node->value->first, k))
                 delete_node(node->right, k);
             else if(this->_ob_comp(k, node->value->first))
                 delete_node(node->left, k);
             else {
-                if(node->left == NULL || node->right == NULL){
+                if(!node->left || !node->right){
                     Node *tmp = node->left ? node->left : node->right;
-                    if(tmp == NULL){
+                    if(!tmp){
                         tmp = node;
                         node = NULL;
                     }
@@ -220,7 +220,7 @@ namespace ft
             }
 
             //add node null cond because aborted
-            if(node == NULL)
+            if(!node)
                 return ;
 
             node->height = 1 + max(node_height(node->left), node_height(node->right));
@@ -247,7 +247,7 @@ namespace ft
         Node *search(Node *node, key k) const {
             Node *tmp;
 
-            if (node == NULL)
+            if (!node)
                 return NULL;
             tmp = node;
 
