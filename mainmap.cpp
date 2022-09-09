@@ -1,7 +1,6 @@
 // erasing from map
 #include <iostream>
 #include "map/map.hpp"
-#include <map>
 
 int main ()
 {
