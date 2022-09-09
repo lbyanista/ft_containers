@@ -1,4 +1,4 @@
-NAME	=	containers
+NAME	=	ft_containers
 SRC		=	*.cpp */*.cpp
 CPP		=	c++
 FLAGS	=	-Wall -Werror -Wextra -std=c++98

@@ -15,7 +15,7 @@ namespace ft
         typedef typename ft::iterator_traits<iterator>::reference           reference;
 
         private:
-            iterator_type current;
+            iterator_type _current;
 
         public:
         // constructors
