@@ -188,24 +188,24 @@ namespace ft
         }
 
         void delete_node(Node *&node, key k){
-            if(!node)
+            if(node == NULL)
                 return ;
             if(this->_ob_comp(node->value->first, k))
                 delete_node(node->right, k);
             else if(this->_ob_comp(k, node->value->first))
                 delete_node(node->left, k);
             else {
-                if(!node->left || !node->right){
+                if(node->left == NULL || node->right == NULL){
                     Node *tmp = node->left ? node->left : node->right;
-                    if(!tmp){
+                    if(tmp == NULL){
                         tmp = node;
                         node = NULL;
                     }
                     else
                     {
                         std::swap(node->value, tmp->value);
-                        node->right = tmp->right;
                         node->left = tmp->left;
+                        node->right = tmp->right;
                         node->height = tmp->height;
                     }
 
@@ -218,6 +218,10 @@ namespace ft
                     this->delete_node(node->right, min->value->first);
                 }
             }
+
+            //add node null cond because aborted
+            if(node == NULL)
+                return ;
 
             node->height = 1 + max(node_height(node->left), node_height(node->right));
 
