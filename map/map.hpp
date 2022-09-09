@@ -237,7 +237,7 @@ namespace ft {
         }
 
         const_iterator find (const key_type& k) const {
-			Node *n = _tree.find(_tree._node, k);
+			Node *n = _tree.search(_tree._node, k);
 			if (n)
 				return (const_iterator(this->_tree, n));
 			return (this->end());
