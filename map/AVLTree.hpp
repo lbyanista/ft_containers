@@ -260,7 +260,7 @@ namespace ft
             remove_tree(node->left);
             remove_tree(node->right);
             this->_alloc_node.deallocate(node, 1);
-            this->_alloc_pair.deallocate(node->value, 1);
+            // this->_alloc_pair.deallocate(node->value, 1);
             node = NULL;
         }
 
