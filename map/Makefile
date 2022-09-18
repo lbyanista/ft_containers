@@ -1,5 +1,5 @@
-NAME	=	ft_containers
-SRC		=	mainmap.cpp
+NAME	=	map.out
+SRC		=	map_test.cpp
 CPP		=	c++
 FLAGS	=	-Wall -Werror -Wextra -std=c++98
 
@@ -10,9 +10,6 @@ $(NAME): $(SRC)
 
 clean:
 	@rm -f $(NAME)
-
-# map:
-
 
 fclean: clean
 
