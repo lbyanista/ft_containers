@@ -12,8 +12,8 @@ In this project, implement a few container types of the C++ standard template li
 
 
 
-##### MakeFile
+#### MakeFile
 
 -- Makefile For each Container
-    ####### Vector, Stack, Map
+###### Vector, Stack, Map
 
