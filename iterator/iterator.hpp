@@ -108,30 +108,30 @@ namespace ft{
             return (this->_ptr[index]);
         }
 
-        template<class it1, class it2>
-        friend bool operator== (const iterator<it1> &ob1, const iterator<it2> &ob2);
+        // template<class it1, class it2>
+        // friend bool operator== (const iterator<it1> &ob1, const iterator<it2> &ob2);
 
-        template<class it1, class it2>
-        friend bool operator!= (const iterator<it1> &ob1, const iterator<it2> &ob2);
+        // template<class it1, class it2>
+        // friend bool operator!= (const iterator<it1> &ob1, const iterator<it2> &ob2);
 
-        template<class it1, class it2>
-        friend bool operator> (const iterator<it1> &ob1, const iterator<it2> &ob2);
+        // template<class it1, class it2>
+        // friend bool operator> (const iterator<it1> &ob1, const iterator<it2> &ob2);
 
-        template<class it1, class it2>
-        friend bool operator< (const iterator<it1> &ob1, const iterator<it2> &ob2);
+        // template<class it1, class it2>
+        // friend bool operator< (const iterator<it1> &ob1, const iterator<it2> &ob2);
 
-        template<class it1, class it2>
-        friend bool operator>= (const iterator<it1> &ob1, const iterator<it2> &ob2);
+        // template<class it1, class it2>
+        // friend bool operator>= (const iterator<it1> &ob1, const iterator<it2> &ob2);
 
-        template<class it1, class it2>
-        friend bool operator<= (const iterator<it1> &ob1, const iterator<it2> &ob2);
+        // template<class it1, class it2>
+        // friend bool operator<= (const iterator<it1> &ob1, const iterator<it2> &ob2);
 
-        template<class it1, class it2>
-        friend typename iterator<it1>::difference_type operator-(const iterator<it1> &a, const iterator<it2> &b);
+        // template<class it1, class it2>
+        // friend typename iterator<it1>::difference_type operator-(const iterator<it1> &a, const iterator<it2> &b);
 
 
-        template<class it>
-        friend iterator<it> operator+(typename iterator<it>::difference_type a, const iterator<it> &b);
+        // template<class it>
+        // friend iterator<it> operator+(typename iterator<it>::difference_type a, const iterator<it> &b);
 
    };
 
